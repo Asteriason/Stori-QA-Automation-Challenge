@@ -32,6 +32,7 @@ Required libraries:
 │   ├── locators.py         # Contains all element locators
 ├── utilities/
 │   ├── actions.py          # Core utility methods for interactions
+│   ├── environment.py      # Browser setup
 ├── tests/
 │   ├── test_cases.py       # Test cases for the application
 ├── screenshots/            # Folder for screenshots (auto-generated)
