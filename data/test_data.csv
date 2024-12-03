@@ -1,0 +1,13 @@
+key,value
+url,https://rahulshettyacademy.com/AutomationPractice/
+input_text,Me
+country,Mexico
+dropdown_option_1,2
+dropdown_option_2,3
+alert_text,Stori Card
+price_filter,$25
+course_price,25
+heading_xpath,"//h3[text()='30 day Money Back Guarantee']"
+paragraph_xpath,"//p[contains(text(), 'We would never want you to be unhappy!')]"
+alert_input_text,Stori Card
+expected_text,"Hello Stori Card, Are you sure you want to confirm?"
