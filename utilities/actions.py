@@ -641,16 +641,20 @@ class Actions:
         return engineer_names
 
 
-    def get_highlighted_text(self, iframe_locator, highlighted_text_locator):
+    def get_highlighted_text(self, iframe_locator, highlighted_text_locator, expected_text):
         """
-        Switches to the iFrame and retrieves the highlighted text.
+        Switches to the iFrame and retrieves the highlighted text, validating it against the expected string.
 
         Args:
             iframe_locator (str): XPath to locate the iFrame.
             highlighted_text_locator (str): XPath to locate the highlighted text in blue.
+            expected_text (str): The exact text expected to be highlighted.
 
         Returns:
             str: The highlighted text.
+
+        Raises:
+            Exception: If the highlighted text does not match the expected string or an error occurs.
         """
         try:
             # Switch to the iFrame
@@ -666,7 +670,10 @@ class Actions:
 
             # Extract the text of the highlighted element
             highlighted_text = highlighted_element.text
-            print(f"[PASS] Highlighted text: {highlighted_text}")
+
+            # Validate the highlighted text matches the expected string
+            assert highlighted_text == expected_text, f"[FAIL] Highlighted text does not match. Expected: '{expected_text}', Got: '{highlighted_text}'"
+            print(f"[PASS] Highlighted text matches the expected string: '{highlighted_text}'")
 
             # Take a screenshot after scrolling
             self.take_screenshot("Highlighted_text")
@@ -675,7 +682,6 @@ class Actions:
             self.driver.switch_to.default_content()
 
             return highlighted_text
-
 
         except Exception as e:
             print(f"[FAIL] Failed to get highlighted text. Error: {e}")
@@ -697,45 +703,3 @@ class Actions:
         print("[PASS] Engineers found in the table:")
         for name in engineers:
             print(f"- {name}")
-
-    def handle_iframe_highlighted_text(self, iframe_locator, highlighted_text_locator):
-        """
-        Handles switching to an iFrame, retrieving highlighted text, and validating it.
-
-        Args:
-            iframe_locator (str): XPath to locate the iFrame.
-            highlighted_text_locator (str): XPath to locate the highlighted text within the iFrame.
-
-        Returns:
-            str: The highlighted text if found.
-
-        Raises:
-            Exception: If highlighted text is not found or an error occurs.
-        """
-        try:
-            # Switch to the iFrame
-            iframe = self.driver.find_element(By.XPATH, iframe_locator)
-            self.driver.switch_to.frame(iframe)
-
-            # Locate and scroll to the highlighted text
-            highlighted_element = self.driver.find_element(By.XPATH, highlighted_text_locator)
-            self.driver.execute_script("arguments[0].scrollIntoView(true);", highlighted_element)
-            print(f"[INFO] Scrolled to the highlighted element.")
-
-            # Extract the highlighted text
-            highlighted_text = highlighted_element.text
-            if not highlighted_text:
-                raise Exception("[FAIL] Highlighted text not found.")
-
-            print(f"[PASS] Highlighted text retrieved: {highlighted_text}")
-
-            # Take a screenshot
-            self.take_screenshot("iframe_highlighted_text")
-
-            # Switch back to the main content
-            self.driver.switch_to.default_content()
-
-            return highlighted_text
-
-        except Exception as e:
-            raise Exception(f"[FAIL] Failed to handle iFrame highlighted text: {e}")

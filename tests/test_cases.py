@@ -118,7 +118,7 @@ def test_case_web_table_engineers(actions):
     # Assert the number of engineers is as expected (optional)
     actions.validate_engineers_found(engineers)
 
-def test_case_iframe_highlighted_text(actions):
+def test_case_iframe_highlighted_text(actions, data):
     """
     Test Case: iFrame Example
     Objective: Print the highlighted text inside the iFrame.
@@ -126,9 +126,10 @@ def test_case_iframe_highlighted_text(actions):
     print("Executing Test Case: iFrame Example")
 
     # Use the encapsulated method to retrieve the highlighted text
-    highlighted_text = actions.handle_iframe_highlighted_text(
+    highlighted_text = actions.get_highlighted_text(
         Locators.IFRAME_LOCATOR,
-        Locators.HIGHLIGHTED_TEXT_LOCATOR
+        Locators.HIGHLIGHTED_TEXT_LOCATOR,
+        data["highlight_text"]
     )
     # Log the result
     print(f"[PASS] Highlighted Text: {highlighted_text}")
